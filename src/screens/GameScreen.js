@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-
+import CustomButton from '../components/CustomButton'
+let minNumber = 1
+let maxNumber = 100
 export default function GameScreen({ userNumber }) {
     const initialGuess = generateNumber(1, 100, userNumber)
     const [currentGuess, setCurrentGuess] = useState(initialGuess)
@@ -16,12 +18,37 @@ export default function GameScreen({ userNumber }) {
         }
     }
 
+
+    function nextGuesshandler(direction) {
+
+        if (direction == 'lower' && currentGuess < userNumber || direction == 'greater' && currentGuess > userNumber) {
+            Alert.alert("Beni yanlış yönlendiremezsin", [{ title: 'Tamam', style: 'cancel' }])
+            return
+        }
+
+
+
+
+        if (direction == 'lower') {
+            maxNumber = currentGuess
+        } else {
+            minNumber = currentGuess + 1
+        }
+
+        const newRandomNumber = generateNumber(minNumber, maxNumber, currentGuess)
+        setCurrentGuess(newRandomNumber)
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.title}>Bilgisayar Tahmini</Text>
             <Text style={styles.title}>{currentGuess}</Text>
             <View>
                 <Text>Altında mı Üstünde mi?</Text>
+            </View>
+            <View>
+                <CustomButton onPress={nextGuesshandler.bind(this, 'lower')} style={styles.title}>-</CustomButton>
+                <CustomButton onPress={nextGuesshandler.bind(this, 'greater')} style={styles.title}>+</CustomButton>
             </View>
         </SafeAreaView>
     )
