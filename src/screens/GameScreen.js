@@ -1,12 +1,19 @@
 import { Alert, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomButton from '../components/CustomButton'
 let minNumber = 1
 let maxNumber = 100
-export default function GameScreen({ userNumber }) {
+export default function GameScreen({ userNumber, onGameOver }) {
     const initialGuess = generateNumber(1, 100, userNumber)
     const [currentGuess, setCurrentGuess] = useState(initialGuess)
+
+    useEffect(() => {
+        if (currentGuess == userNumber) {
+            onGameOver()
+        }
+    }, [currentGuess, userNumber, onGameOver])
+
 
     function generateNumber(min, max, exclude) {
         const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;

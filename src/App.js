@@ -13,11 +13,16 @@ export default function App() {
         setUserNumber(sendedNumber)
         setGameisOver(false)
     }
+
+    function gameOverHandler(){
+        setGameisOver(true)
+    }
+
     let screen = <GameStartScreen onsendedNumber={sendednumberHandler} />
 
 
     if (userNumber) {
-        screen= <GameScreen userNumber={userNumber} />
+        screen= <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />
     }
 
     if (gameisOver && userNumber) {
