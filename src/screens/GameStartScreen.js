@@ -1,14 +1,22 @@
-import { SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Alert, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native'
 import React,{useState} from 'react'
 import CustomButton from '../components/CustomButton'
 
-export default function GameStartScreen() {
+export default function GameStartScreen({onsendedNumber}) {
     const [enterednumber, setEnteredNumber] = useState('')
-    const handleReset = () =>{
-        enterednumber('')
-    }
-    const handleConfirm = () =>{
 
+    const handleReset = () =>{
+        setEnteredNumber('')
+    }
+
+    const handleConfirm = () =>{
+        const number=parseInt(enterednumber)
+        if(isNaN(number) || number <= 0 || number > 99){
+            Alert.alert('Geçersiz Sayı', 'Sayı 0 ile 99 arasında olmalıdır',[{text:'Tamam',style:'destructive', onPress:handleReset},
+        ])
+        return
+        }
+        onsendedNumber(number)
     }
 
     function handleEntered (text){
