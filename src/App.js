@@ -14,7 +14,7 @@ export default function App() {
 
 
     if (userNumber) {
-        screen= <GameScreen />
+        screen= <GameScreen userNumber={userNumber} />
     }
     return (
         <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a', 'transparent']} style={styles.linearGradient}>
